@@ -121,7 +121,7 @@ data$time <- as.Date(data$time)
 
 ```{r, echo = TRUE}
 # Prepare time series data
-ts_data <- ts(data$close, frequency = 1)  # Assuming monthly frequency
+ts_data <- ts(data$close, frequency = 1) 
 ```
 
 ```{r, echo = TRUE}
