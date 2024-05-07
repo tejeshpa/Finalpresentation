@@ -1,0 +1,160 @@
+---
+title: "Comprehensive Analysis of Stock Price Time Series: Clustering and Forecasting Techniques"
+author: "Tejesh Pawar"
+format: revealjs
+toc: true
+slide-number: true
+smaller: false
+scrollable: true
+---
+
+## Overview
+- The goal of this project is to demonstrate time series analysis techniques, including clustering and forecasting, using historical stock price data.
+- We'll provide an overview of K-means clustering and time series forecasting and discuss their applications in grouping stocks based on price movement patterns and predicting future stock prices.
+---
+
+## Theoretical Explanation
+### K-means Clustering
+- **Unsupervised Clustering**: K-means clustering is an unsupervised machine learning algorithm used to partition a dataset into K distinct clusters based on similarity.
+- **Objective**: The algorithm aims to minimize within-cluster variance, which is the sum of squared distances between data points and their assigned cluster centroids.
+- **Algorithm Steps**:
+  1. **Initialization**: Randomly select K initial cluster centroids.
+  2. **Assignment**: Assign each data point to the nearest centroid.
+  3. **Update Centroids**: Recalculate the centroids based on the mean of data points in each cluster.
+  4. **Iteration**: Repeat steps 2 and 3 until convergence.
+- **Applications**: K-means clustering is used in various fields, including customer segmentation, image segmentation, and anomaly detection.
+- **Mathematical Representation**:
+  - Objective Function:
+    $$
+    J(c, \mu) = \sum_{i=1}^{m} \sum_{j=1}^{k} \| x^{(i)} - \mu_j \|^2
+    $$
+    Where:
+    - \(J(c, \mu)\) is the objective function.
+    - \(c^{(i)}\) is the cluster assignment for the \(i\)th example.
+    - \(\mu_j\) is the centroid of the \(j\)th cluster.
+    - \(k\) is the number of clusters.
+
+##
+
+### Time Series Forecasting
+- Introduce Exponential Smoothing as a time series forecasting method and explain its components and applications.
+- **Mathematical Representation**:
+  - Exponential Smoothing:
+    $$
+    \hat{y}_{t+1|t} = \alpha y_t + (1 - \alpha) \hat{y}_{t|t-1}
+    $$
+    Where:
+    - \(\hat{y}_{t+1|t}\) is the forecast for time \(t+1\) given information up to time \(t\).
+    - \(y_t\) is the actual observation at time \(t\).
+    - \(\hat{y}_{t|t-1}\) is the forecast for time \(t\) based on information up to time \(t-1\).
+    - \(\alpha\) is the smoothing parameter.
+
+## Sample Dataset
+- We'll use historical daily stock price data for a few companies, including columns for the date and closing price.
+- Additionally, we'll include features such as volume and technical indicators (e.g., moving averages) for forecasting.
+
+## R Code Implementation
+```{r, echo = TRUE}
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(forecast)
+```
+
+```{r, echo = TRUE}
+# Load the sample dataset
+data <- read.csv('Tech_data.csv')
+head(data, 10)
+```
+
+```{r, echo = TRUE}
+# Preprocess the data (if needed)
+data$time <- as.Date(data$time)  # Convert 'time' column to Date format
+```
+
+```{r, echo = TRUE}
+# Select features for clustering (e.g., closing price)
+features <- dplyr::select(data, open, high, low, close)
+```
+
+```{r, echo = TRUE}
+```
+
+
+```{r, echo = TRUE}
+# Standardize the features
+scaled_features <- scale(features)
+```
+
+```{r, echo = TRUE}
+# Apply K-means clustering
+k <- 3  # Number of clusters
+kmeans_result <- kmeans(scaled_features, centers=k)
+```
+
+```{r, echo = TRUE}
+# Add cluster labels to the dataset
+data$Cluster <- as.factor(kmeans_result$cluster)
+```
+
+## Visualize the clustering result
+```{r, echo = TRUE}
+# Visualize the clustering result
+ggplot(data, aes(x = time, y = close, color = Cluster)) +
+  geom_line() +
+  labs(title = "K-means Clustering of Stock Price Time Series", x = "Time", y = "Close Price") +
+  facet_wrap(~Company, scales = "free_y")
+```
+
+#
+```{r, echo = TRUE}
+# Time Series Forecasting (Exponential Smoothing)
+# Convert 'time' column to Date format
+data$time <- as.Date(data$time)
+```
+
+```{r, echo = TRUE}
+# Prepare time series data
+ts_data <- ts(data$close, frequency = 1)  # Assuming monthly frequency
+```
+
+```{r, echo = TRUE}
+# Split data into training and test sets
+train_end <- as.Date("1999-11-01")  # Training data until November 1999
+test_start <- as.Date("1999-12-01")  # Test data from December 1999 onwards
+
+train <- window(ts_data, end = as.numeric(train_end))  
+test <- window(ts_data, start = as.numeric(test_start))
+```
+
+```{r, echo = TRUE}
+# Perform exponential smoothing
+forecast_model <- ets(train)
+```
+
+## Generate forecasts
+```{r, echo = TRUE}
+# Generate forecasts
+forecast_values <- forecast(forecast_model, h=length(test))
+forecast_values
+```
+
+## Plot forecasts
+```{r, echo = TRUE}
+# Plot forecasts
+autoplot(forecast_values) + 
+  autolayer(fitted(forecast_model), series = "Predicted") +
+  autolayer(test, series = "Actual") +
+  xlab("Time") + ylab("Close Price") +
+  ggtitle("Exponential Smoothing Forecasting")
+```
+
+# Conclusion
+
+- Explored K-means clustering and time series forecasting for stock price analysis.
+- K-means clusters similar stocks to identify patterns in price movements.
+- Exponential smoothing forecasts future stock prices, aiding investment decisions.
+- Integration of these techniques enhances understanding and informs investment strategies.
+
+# Thank You!
