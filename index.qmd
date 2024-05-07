@@ -43,9 +43,19 @@ scrollable: true
 𝛼
 - Adaptability: Can be easily adjusted to capture different patterns in data, such as trend and seasonality.
 - Applications: Widely used in finance, economics, and operations management for short-term forecasting tasks.
+- **Mathematical Representation**:
+  - Exponential Smoothing:
+    $$
+    \hat{y}_{t+1|t} = \alpha y_t + (1 - \alpha) \hat{y}_{t|t-1}
+    $$
+    Where:
+    - \(\hat{y}_{t+1|t}\) is the forecast for time \(t+1\) given information up to time \(t\).
+    - \(y_t\) is the actual observation at time \(t\).
+    - \(\hat{y}_{t|t-1}\) is the forecast for time \(t\) based on information up to time \(t-1\).
+    - \(\alpha\) is the smoothing parameter.
 
 ## Sample Dataset
-- We'll use historical daily stock price data for a few companies like Amazon, Netflix, Microsoft, Alphabet,Apple and Meta, including columns for the date and closing price.
+- We'll use historical daily stock price data for a few companies, including columns for the date and closing price.
 - Additionally, we'll include features such as volume and technical indicators (e.g., moving averages) for forecasting.
 
 ## R Code Implementation
@@ -111,7 +121,7 @@ data$time <- as.Date(data$time)
 
 ```{r, echo = TRUE}
 # Prepare time series data
-ts_data <- ts(data$close, frequency = 1) 
+ts_data <- ts(data$close, frequency = 1)  # Assuming monthly frequency
 ```
 
 ```{r, echo = TRUE}

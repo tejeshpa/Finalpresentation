@@ -466,7 +466,11 @@ J(c, \mu) = \sum_{i=1}^{m} \sum_{j=1}^{k} \| x^{(i)} - \mu_j \|^2
 <h2></h2>
 <h3 id="time-series-forecasting">Time Series Forecasting</h3>
 <ul>
-<li>Introduce Exponential Smoothing as a time series forecasting method and explain its components and applications.</li>
+<li>Definition: Exponential smoothing is a popular time series forecasting method that assigns exponentially decreasing weights to past observations.</li>
+<li>Smoothing Parameter(α): Controls the rate of decay of past observations’ influence on the forecast.</li>
+<li>Implementation: Requires only historical data and a choice of 𝛼</li>
+<li>Adaptability: Can be easily adjusted to capture different patterns in data, such as trend and seasonality.</li>
+<li>Applications: Widely used in finance, economics, and operations management for short-term forecasting tasks.</li>
 <li><strong>Mathematical Representation</strong>:
 <ul>
 <li>Exponential Smoothing: <span class="math display">\[

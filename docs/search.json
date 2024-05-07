@@ -18,7 +18,7 @@
     "href": "index.html#section",
     "title": "Comprehensive Analysis of Stock Price Time Series: Clustering and Forecasting Techniques",
     "section": "",
-    "text": "Time Series Forecasting\n\nIntroduce Exponential Smoothing as a time series forecasting method and explain its components and applications.\nMathematical Representation:\n\nExponential Smoothing: \\[\n\\hat{y}_{t+1|t} = \\alpha y_t + (1 - \\alpha) \\hat{y}_{t|t-1}\n\\] Where:\n\n(_{t+1|t}) is the forecast for time (t+1) given information up to time (t).\n(y_t) is the actual observation at time (t).\n(_{t|t-1}) is the forecast for time (t) based on information up to time (t-1).\n() is the smoothing parameter."
+    "text": "Time Series Forecasting\n\nDefinition: Exponential smoothing is a popular time series forecasting method that assigns exponentially decreasing weights to past observations.\nSmoothing Parameter(α): Controls the rate of decay of past observations’ influence on the forecast.\nImplementation: Requires only historical data and a choice of 𝛼\nAdaptability: Can be easily adjusted to capture different patterns in data, such as trend and seasonality.\nApplications: Widely used in finance, economics, and operations management for short-term forecasting tasks.\nMathematical Representation:\n\nExponential Smoothing: \\[\n\\hat{y}_{t+1|t} = \\alpha y_t + (1 - \\alpha) \\hat{y}_{t|t-1}\n\\] Where:\n\n(_{t+1|t}) is the forecast for time (t+1) given information up to time (t).\n(y_t) is the actual observation at time (t).\n(_{t|t-1}) is the forecast for time (t) based on information up to time (t-1).\n() is the smoothing parameter."
   },
   {
     "objectID": "index.html#sample-dataset",
